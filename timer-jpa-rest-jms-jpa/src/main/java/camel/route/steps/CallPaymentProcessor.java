@@ -22,7 +22,7 @@ public class CallPaymentProcessor implements Processor {
 
     // @Transactional no transactional here => multiple steps with possible failing conditions
     @Override
-    public void process(Exchange exchange) throws Exception {
+    public void process(Exchange exchange) {
 
 
         // step 1

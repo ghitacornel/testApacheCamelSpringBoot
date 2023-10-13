@@ -16,7 +16,7 @@ public class ReadNewOrdersFromDBProcessor implements Processor {
     private final OrderRepository orderRepository;
 
     @Override
-    public void process(Exchange exchange) throws Exception {
+    public void process(Exchange exchange) {
         List<Order> orders = orderRepository.findNewOrders();
         exchange.getMessage().setBody(orders);
     }

@@ -17,9 +17,8 @@ public class DeleteCompletedOrdersProcessor implements Processor {
 
     private final OrderRepository orderRepository;
 
-
     @Override
-    public void process(Exchange exchange) throws Exception {
+    public void process(Exchange exchange) {
         List<Order> orders = orderRepository.findCompletedOrders();
         log.info("delete completed orders " + orders.stream().map(Order::getId).toList());
         orderRepository.deleteAll(orders);

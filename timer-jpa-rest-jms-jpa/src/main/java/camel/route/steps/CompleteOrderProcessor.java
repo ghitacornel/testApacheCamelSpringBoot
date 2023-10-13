@@ -18,10 +18,10 @@ public class CompleteOrderProcessor implements Processor {
     private final OrderRepository orderRepository;
 
     @Override
-    public void process(Exchange exchange) throws Exception {
+    public void process(Exchange exchange) {
         Order order = exchange.getMessage().getBody(Order.class);
 
-        // do not complete orders with status different than this
+        // do not complete orders with status different from this
         if (order.getStatus() != OrderStatus.PAYMENT_COMPLETED) {
             return;
         }
