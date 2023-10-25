@@ -33,10 +33,6 @@
             <groupId>org.apache.camel.springboot</groupId>
             <artifactId>camel-jackson-starter</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.camel.springboot</groupId>
-            <artifactId>camel-jms-starter</artifactId>
-        </dependency>
 
         <!-- JMS -->
         <dependency>
