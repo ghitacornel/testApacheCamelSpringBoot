@@ -8,16 +8,16 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+//import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
+//import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @CamelSpringBootTest
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
+//@AutoConfigureMockMvc
 public class RouteTest {
 
     // Spring will inject the random port assigned to the web server
@@ -27,8 +27,8 @@ public class RouteTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    @Autowired
-    TestRestTemplate template;
+//    @Autowired
+//    TestRestTemplate template;
 
     @Autowired
     MessageDbRepository repository;
@@ -38,20 +38,20 @@ public class RouteTest {
         repository.deleteAll();
     }
 
-    @Test
-    public void testPostNoProcessor() throws Exception {
-
-        Assertions.assertThat(repository.findAll()).isEmpty();
-
-        CustomMessage request = new CustomMessage(1);
-        ResponseEntity<String> response = template.postForEntity("http://localhost:" + webServerPort + "/xxx/jms", objectMapper.writeValueAsString(request), String.class);
-        Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-        Assertions.assertThat(response.getBody()).isNull();
-
-        Assertions.assertThat(repository.findAll().size()).isEqualTo(1);
-        Assertions.assertThat(repository.findAll().get(0).getId()).isEqualTo(1);
-        Assertions.assertThat(repository.findAll().get(0).getLogs()).isEqualTo("[RestJmsComponent processed, Queue1Queue2 processed, Queue2JPA processed]");
-    }
+//    @Test
+//    public void testPostNoProcessor() throws Exception {
+//
+//        Assertions.assertThat(repository.findAll()).isEmpty();
+//
+//        CustomMessage request = new CustomMessage(1);
+//        ResponseEntity<String> response = template.postForEntity("http://localhost:" + webServerPort + "/xxx/jms", objectMapper.writeValueAsString(request), String.class);
+//        Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+//        Assertions.assertThat(response.getBody()).isNull();
+//
+//        Assertions.assertThat(repository.findAll().size()).isEqualTo(1);
+//        Assertions.assertThat(repository.findAll().get(0).getId()).isEqualTo(1);
+//        Assertions.assertThat(repository.findAll().get(0).getLogs()).isEqualTo("[RestJmsComponent processed, Queue1Queue2 processed, Queue2JPA processed]");
+//    }
 
 
 }

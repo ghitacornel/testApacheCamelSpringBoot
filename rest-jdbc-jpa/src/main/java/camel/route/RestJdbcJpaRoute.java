@@ -9,7 +9,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.stereotype.Component;
 
-import javax.validation.ValidationException;
+import jakarta.validation.ValidationException;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
