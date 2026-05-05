@@ -24,6 +24,7 @@ public class Person {
 
     @NotNull
     @Min(10)
+    @Builder.Default
     private int age = 10;
 
 }

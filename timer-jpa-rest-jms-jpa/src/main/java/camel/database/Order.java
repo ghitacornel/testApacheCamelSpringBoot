@@ -29,8 +29,10 @@ public class Order {
     private int percentageVoucherReduction;
     private Date paymentDate;
 
+    @Builder.Default
     private int voucherTryCount = 0;
 
+    @Builder.Default
     private int paymentTryCount = 0;
 
     @Builder.Default
