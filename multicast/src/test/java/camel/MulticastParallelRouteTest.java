@@ -4,13 +4,14 @@ import camel.route.Snapshot;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.test.spring.junit5.CamelSpringBootTest;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @CamelSpringBootTest
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -31,10 +32,10 @@ public class MulticastParallelRouteTest {
         Thread.sleep(300);
 
         // check the snapshot and verify the parallel processing
-        Assertions.assertThat(snapshot.getTrace().size()).isEqualTo(3);
-        Assertions.assertThat(snapshot.getTrace().keySet()).contains("parallel step 1", "parallel step 2", "parallel step 3");
+        assertThat(snapshot.getTrace().size()).isEqualTo(3);
+        assertThat(snapshot.getTrace().keySet()).contains("parallel step 1", "parallel step 2", "parallel step 3");
         Set<Thread> threads = new HashSet<>(snapshot.getTrace().values());
-        Assertions.assertThat(threads.size()).isEqualTo(3);
+        assertThat(threads.size()).isEqualTo(3);
 
     }
 }

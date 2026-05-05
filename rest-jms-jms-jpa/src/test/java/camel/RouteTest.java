@@ -3,7 +3,6 @@ package camel;
 import camel.model.CustomMessage;
 import camel.repository.MessageDbRepository;
 import org.apache.camel.test.spring.junit5.CamelSpringBootTest;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClient;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @CamelSpringBootTest
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -35,7 +36,7 @@ public class RouteTest {
     @Test
     public void testPostNoProcessor() {
 
-        Assertions.assertThat(repository.findAll()).isEmpty();
+        assertThat(repository.findAll()).isEmpty();
 
         CustomMessage request = new CustomMessage(1);
 
@@ -44,12 +45,12 @@ public class RouteTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(request).retrieve().toEntity(String.class);
 
-        Assertions.assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-        Assertions.assertThat(entity.getBody()).isNull();
+        assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        assertThat(entity.getBody()).isNull();
 
-        Assertions.assertThat(repository.findAll().size()).isEqualTo(1);
-        Assertions.assertThat(repository.findAll().getFirst().getId()).isEqualTo(1);
-        Assertions.assertThat(repository.findAll().getFirst().getLogs()).isEqualTo("[RestJmsComponent processed, Queue1Queue2 processed, Queue2JPA processed]");
+        assertThat(repository.findAll().size()).isEqualTo(1);
+        assertThat(repository.findAll().getFirst().getId()).isEqualTo(1);
+        assertThat(repository.findAll().getFirst().getLogs()).isEqualTo("[RestJmsComponent processed, Queue1Queue2 processed, Queue2JPA processed]");
     }
 
 

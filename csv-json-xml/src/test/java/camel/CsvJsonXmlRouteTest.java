@@ -1,7 +1,6 @@
 package camel;
 
 import org.apache.camel.test.spring.junit5.CamelSpringBootTest;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -65,7 +64,7 @@ public class CsvJsonXmlRouteTest {
 
             Source control = Input.fromPath(expectedOutputFile).build();
             Source test = Input.fromPath(workingOutputFile).build();
-            Assertions.assertThat(
+            assertThat(
                     DiffBuilder.compare(test).withTest(control)
                             .ignoreWhitespace()
                             .ignoreComments()
@@ -81,7 +80,7 @@ public class CsvJsonXmlRouteTest {
 
             Source control = Input.fromPath(expectedOutputFile).build();
             Source test = Input.fromPath(workingOutputFile).build();
-            Assertions.assertThat(
+            assertThat(
                     DiffBuilder.compare(test).withTest(control)
                             .ignoreWhitespace()
                             .ignoreComments()

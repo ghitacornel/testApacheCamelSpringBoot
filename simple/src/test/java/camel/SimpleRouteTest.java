@@ -5,10 +5,11 @@ import camel.route.steps.InitialStep;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.test.spring.junit5.CamelSpringBootTest;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @CamelSpringBootTest
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -33,8 +34,8 @@ public class SimpleRouteTest {
         // create a dummy producer and send a dummy starting message
         template.sendBody("direct:start", "This is just a dummy startup message. It will be ignored");
 
-        Assertions.assertThat(initialStep.testDate).isNotNull();
-        Assertions.assertThat(finalStep.testString).isEqualTo((initialStep.testDate.getTime() + 222) + " 3");
+        assertThat(initialStep.testDate).isNotNull();
+        assertThat(finalStep.testString).isEqualTo((initialStep.testDate.getTime() + 222) + " 3");
 
     }
 }
