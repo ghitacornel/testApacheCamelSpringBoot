@@ -24,6 +24,19 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-activemq</artifactId>
         </dependency>
+        <!-- ActiveMQ Broker Core -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-broker</artifactId>
+            <version>6.1.8</version> <!-- Use latest 5.x or 6.x -->
+        </dependency>
+
+        <!-- KahaDB Persistence Store -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-kahadb-store</artifactId>
+            <version>6.1.8</version> <!-- Match version with activemq-broker -->
+        </dependency>
 
         <dependency>
             <groupId>org.apache.camel.springboot</groupId>
