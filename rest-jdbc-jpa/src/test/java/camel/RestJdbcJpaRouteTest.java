@@ -1,9 +1,9 @@
 package camel;
 
 import camel.route.model.PersonRequest;
+import camel.route.model.PersonResponse;
 import camel.route.repository.PersonRepository;
 import camel.route.repository.entity.Person;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.camel.test.spring.junit5.CamelSpringBootTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClient;
 
 @CamelSpringBootTest
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -22,11 +25,7 @@ public class RestJdbcJpaRouteTest {
     @LocalServerPort
     int webServerPort;
 
-    @Autowired
-    ObjectMapper objectMapper;
-
-//    @Autowired
-//    TestRestTemplate template;
+    RestClient restClient = RestClient.create();
 
     @Autowired
     PersonRepository personRepository;
@@ -36,51 +35,68 @@ public class RestJdbcJpaRouteTest {
         personRepository.deleteAll();
         personRepository.save(Person.builder().id(1).name("first").age(111).build());
     }
-//
-//    @Test
-//    public void testGet() {
-//        ResponseEntity<String> response = template.getForEntity("http://localhost:" + webServerPort + "/camel/api/1", String.class);
-//        Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-//        Assertions.assertThat(response.getBody()).isEqualTo("{\"id\":1,\"name\":\"first\",\"age\":111}");
-//    }
-//
-//    @Test
-//    public void testGetNotFound() {
-//        ResponseEntity<String> response = template.getForEntity("http://localhost:" + webServerPort + "/camel/api/-1", String.class);
-//        Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-//        Assertions.assertThat(response.getBody()).isNull();
-//    }
-//
-//    @Test
-//    public void testPostNoProcessor() throws Exception {
-//        PersonRequest personRequest = new PersonRequest("none", 2, "ion", 11);
-//        ResponseEntity<String> response = template.postForEntity("http://localhost:" + webServerPort + "/camel/api", objectMapper.writeValueAsString(personRequest), String.class);
-//        Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-//        Assertions.assertThat(response.getBody()).isEqualTo("{\"id\":null,\"name\":\"ion\",\"age\":11}");
-//    }
-//
-//    @Test
-//    public void testPostJPAProcessor() throws Exception {
-//        PersonRequest personRequest = new PersonRequest("jpa", 3, "gheorge", 12);
-//        ResponseEntity<String> response = template.postForEntity("http://localhost:" + webServerPort + "/camel/api", objectMapper.writeValueAsString(personRequest), String.class);
-//        Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-//        Assertions.assertThat(response.getBody()).isEqualTo("{\"id\":3,\"name\":\"gheorge\",\"age\":12}");
-//    }
-//
-//    @Test
-//    public void testPostJPAProcessorBadData() throws Exception {
-//        PersonRequest personRequest = new PersonRequest("jpa", 33, "   ", 5);
-//        ResponseEntity<String> response = template.postForEntity("http://localhost:" + webServerPort + "/camel/api", objectMapper.writeValueAsString(personRequest), String.class);
-//        Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-//        Assertions.assertThat(response.getBody()).isEqualTo("Could not commit JPA transaction; nested exception is javax.persistence.RollbackException: Error while committing the transaction");
-//    }
-//
-//    @Test
-//    public void testPostJDBCProcessor() throws Exception {
-//        PersonRequest personRequest = new PersonRequest("jdbc", 4, "vasile", 13);
-//        ResponseEntity<String> response = template.postForEntity("http://localhost:" + webServerPort + "/camel/api", objectMapper.writeValueAsString(personRequest), String.class);
-//        Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-//        Assertions.assertThat(response.getBody()).isEqualTo("{\"id\":4,\"name\":\"vasile\",\"age\":13}");
-//    }
+
+    @Test
+    public void testGet() {
+        ResponseEntity<String> response = restClient.get()
+                .uri("http://localhost:" + webServerPort + "/camel/api/1")
+                .retrieve().toEntity(String.class);
+
+        Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        Assertions.assertThat(response.getBody()).isEqualTo("{\"id\":1,\"name\":\"first\",\"age\":111}");
+    }
+
+    @Test
+    public void testGetNotFound() {
+        Assertions.assertThatThrownBy(() -> restClient.get()
+                .uri("http://localhost:" + webServerPort + "/camel/api/-1")
+                .retrieve().toEntity(String.class)).isInstanceOf(HttpClientErrorException.NotFound.class);
+    }
+
+    @Test
+    public void testPostNoProcessor() {
+        PersonRequest personRequest = new PersonRequest("none", 2, "ion", 11);
+
+        PersonResponse response = restClient.post()
+                .uri("http://localhost:" + webServerPort + "/camel/api")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(personRequest).retrieve().body(PersonResponse.class);
+
+        Assertions.assertThat(response).isEqualTo(PersonResponse.builder().name("ion").age(11).build());
+    }
+
+    @Test
+    public void testPostJPAProcessor() {
+        PersonRequest personRequest = new PersonRequest("jpa", 3, "gheorge", 12);
+
+        PersonResponse response = restClient.post()
+                .uri("http://localhost:" + webServerPort + "/camel/api")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(personRequest).retrieve().body(PersonResponse.class);
+        Assertions.assertThat(response).isEqualTo(PersonResponse.builder().id(3).name("gheorge").age(12).build());
+    }
+
+    @Test
+    public void testPostJPAProcessorBadData() {
+        PersonRequest personRequest = new PersonRequest("jpa", 33, "   ", 5);
+
+        Assertions.assertThatThrownBy(() -> restClient.post()
+                        .uri("http://localhost:" + webServerPort + "/camel/api")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(personRequest).retrieve().toEntity(String.class))
+                .isInstanceOf(HttpClientErrorException.BadRequest.class)
+                .hasMessage("400 Bad Request: \"\"Could not commit JPA transaction\"\"");
+    }
+
+    @Test
+    public void testPostJDBCProcessor() {
+        PersonRequest personRequest = new PersonRequest("jdbc", 4, "vasile", 13);
+
+        PersonResponse response = restClient.post()
+                .uri("http://localhost:" + webServerPort + "/camel/api")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(personRequest).retrieve().body(PersonResponse.class);
+        Assertions.assertThat(response).isEqualTo(PersonResponse.builder().id(4).name("vasile").age(13).build());
+    }
 
 }
