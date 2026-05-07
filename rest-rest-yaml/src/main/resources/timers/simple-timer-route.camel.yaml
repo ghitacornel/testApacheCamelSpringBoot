@@ -1,6 +1,6 @@
 - route:
     # refer to the route configuration by the id to use for this route
-    routeConfigurationId: "myRouteConfigurationId"
+    id: "simpleTimerRouteName"
     from:
       uri: "timer:yaml?period=3s&includeMetadata=true"
       steps:
