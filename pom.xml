@@ -17,6 +17,7 @@
         <module>multicast</module>
         <module>csv-processing</module>
         <module>timer-jpa-rest-jms-jpa</module>
+        <module>rest-rest-yaml</module>
     </modules>
 
     <properties>
