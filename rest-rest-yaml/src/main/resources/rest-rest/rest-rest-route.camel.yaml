@@ -1,3 +1,5 @@
+- restConfiguration:
+    bindingMode: json
 - rest:
     path: "/say"
     get:
@@ -14,6 +16,8 @@
       - path: "/submit"
         consumes: "application/json"
         produces: "application/json"
+        type: org.example.model.RequestDTO
+        outType: org.example.model.ResponseDTO
         to: "direct:post"
 - route:
     from:
@@ -55,6 +59,7 @@
       steps:
         - log:
             message: POST request body ${body}
-        - transform:
-            expression:
-              simple: ${body}
+        - bean:
+            beanType: org.example.beans.RequestResponseProcessor
+        - log:
+            message: POST response body ${body}
