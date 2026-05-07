@@ -22,12 +22,23 @@ public class RestRestTest {
 
     @Test
     public void testGet() {
-        ResponseEntity<String> response = restClient.get()
-                .uri("http://localhost:" + webServerPort + "/camel/say/hello")
-                .retrieve().toEntity(String.class);
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isEqualTo("<html><body>Hello World</body></html>");
+        {
+            ResponseEntity<String> response = restClient.get()
+                    .uri("http://localhost:" + webServerPort + "/camel/say/hello")
+                    .retrieve().toEntity(String.class);
+
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isEqualTo("Hello World");
+        }
+        {
+            ResponseEntity<String> response = restClient.get()
+                    .uri("http://localhost:" + webServerPort + "/camel/say/bye")
+                    .retrieve().toEntity(String.class);
+
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isEqualTo("<html><body>Bye World</body></html>");
+        }
     }
 
 }

@@ -2,9 +2,10 @@
     path: "/say"
     get:
       - path: "/hello"
+        produces: "text/plain"
         to: "direct:hello"
       - path: "/bye"
-        consumes: "application/json"
+        produces: "text/html"
         to: "direct:bye"
 - route:
     from:
@@ -13,7 +14,7 @@
         - transform:
             expression:
               constant:
-                expression: <html><body>Hello World</body></html>
+                expression: Hello World
 - route:
     from:
       uri: direct:bye
