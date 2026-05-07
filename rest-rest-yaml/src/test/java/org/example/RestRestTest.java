@@ -22,7 +22,6 @@ public class RestRestTest {
 
     @Test
     public void testGet() {
-
         {
             ResponseEntity<String> response = restClient.get()
                     .uri("http://localhost:" + webServerPort + "/camel/say/hello")
@@ -55,6 +54,19 @@ public class RestRestTest {
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(response.getBody()).isEqualTo("Congrats Sir John");
         }
+    }
+
+    @Test
+    public void testPost() {
+
+        ResponseEntity<String> response = restClient.post()
+                .uri("http://localhost:" + webServerPort + "/camel/say/submit")
+                .body("{\"name\":\"ion\"}")
+                .retrieve().toEntity(String.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isEqualTo("{\"name\":\"ion\"}");
+
     }
 
 }
