@@ -1,0 +1,24 @@
+- rest:
+    path: "/say"
+    get:
+      - path: "/hello"
+        to: "direct:hello"
+      - path: "/bye"
+        consumes: "application/json"
+        to: "direct:bye"
+- route:
+    from:
+      uri: direct:hello
+      steps:
+        - transform:
+            expression:
+              constant:
+                expression: <html><body>Hello World</body></html>
+- route:
+    from:
+      uri: direct:bye
+      steps:
+        - transform:
+            expression:
+              constant:
+                expression: <html><body>Bye World</body></html>

@@ -9,4 +9,4 @@ camel:
     startup-summary-level: verbose
 
     # which directory(s) to scan for routes/route-configurations which can be xml, yaml or java files
-    routes-include-pattern: classpath:timers/* #,classpath:myerror/*,classpath:myinterceptor/*
+    routes-include-pattern: classpath:timers/*,classpath:rest-rest/*
