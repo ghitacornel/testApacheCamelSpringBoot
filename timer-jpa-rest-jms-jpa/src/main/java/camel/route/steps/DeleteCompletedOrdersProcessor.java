@@ -20,7 +20,7 @@ public class DeleteCompletedOrdersProcessor implements Processor {
     @Override
     public void process(Exchange exchange) {
         List<Order> orders = orderRepository.findCompletedOrders();
-        log.info("delete completed orders " + orders.stream().map(Order::getId).toList());
+        log.info("delete completed orders {}", orders.stream().map(Order::getId).toList());
         orderRepository.deleteAll(orders);
     }
 }

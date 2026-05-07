@@ -42,10 +42,10 @@ public class CallPaymentProcessor implements Processor {
             if (order.getPaymentTryCount() > 3) {
                 order.setStatus(OrderStatus.FAILED);
                 orderRepository.save(order);
-                log.error("FAIL Order due to payment " + order.getId() + " tryout " + order.getPaymentTryCount());
+                log.error("FAIL Order due to payment {} tryout {}", order.getId(), order.getPaymentTryCount());
             } else {
                 orderRepository.save(order);
-                log.error("Payment call error, order " + order.getId() + " tryout " + order.getPaymentTryCount());
+                log.error("Payment call error, order {} tryout {}", order.getId(), order.getPaymentTryCount());
             }
             return;
         }
@@ -54,6 +54,6 @@ public class CallPaymentProcessor implements Processor {
         order.setStatus(OrderStatus.PAYMENT_COMPLETED);
         order.setPaymentDate(new Date());
         orderRepository.save(order);
-        log.info("Order " + order.getId() + "  was paid");
+        log.info("Order {}  was paid", order.getId());
     }
 }
