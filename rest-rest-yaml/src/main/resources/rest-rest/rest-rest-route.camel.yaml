@@ -7,7 +7,7 @@
       - path: "/bye"
         produces: "text/html"
         to: "direct:bye"
-      - path: "/congrats/{name}"
+      - path: "/congrats/{name}?title={title}"
         produces: "text/plain"
         to: "direct:congrats"
 - route:
@@ -31,7 +31,7 @@
       uri: direct:congrats
       steps:
         - log:
-            message: logged path param ${header.name}
+            message: logged path param ${header.title} ${header.name}
         - transform:
             expression:
-              simple: Congrats ${header.name}
+              simple: Congrats ${header.title} ${header.name}

@@ -45,7 +45,15 @@ public class RestRestTest {
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(response.getBody()).isEqualTo("Congrats John");
+            assertThat(response.getBody()).isEqualTo("Congrats  John");
+        }
+        {
+            ResponseEntity<String> response = restClient.get()
+                    .uri("http://localhost:" + webServerPort + "/camel/say/congrats/John?title=Sir")
+                    .retrieve().toEntity(String.class);
+
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isEqualTo("Congrats Sir John");
         }
     }
 
