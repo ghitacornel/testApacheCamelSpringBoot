@@ -32,6 +32,15 @@
       steps:
         - log:
             message: logged path param ${header.title} ${header.name}
-        - transform:
-            expression:
-              simple: Congrats ${header.title} ${header.name}
+        - choice:
+            when:
+              - simple: "${header.title} == null"
+                steps:
+                - transform:
+                    expression:
+                      simple: Congrats ${header.name}
+            otherwise:
+              steps:
+              - transform:
+                  expression:
+                    simple: Congrats ${header.title} ${header.name}
