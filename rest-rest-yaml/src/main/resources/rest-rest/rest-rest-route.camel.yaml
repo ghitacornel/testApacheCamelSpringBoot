@@ -1,5 +1,8 @@
 - restConfiguration:
     bindingMode: json
+
+# REST must be kept only as a facade
+# each REST endpoint must delegate work to another route
 - rest:
     path: "/person"
     get:
@@ -22,6 +25,8 @@
     delete:
       - path: "{id}"
         to: "direct:delete"
+
+# REST routes
 - route:
     from:
       uri: direct:hello
