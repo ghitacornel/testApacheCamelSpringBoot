@@ -43,17 +43,16 @@
     from:
       uri: direct:congrats
       steps:
-        - log: GET request query and path param ${header.title} ${header.name}
+        - log: GET external request query and path param ${header.title} ${header.name}
+#        - removeHeaders: "CamelHttp*"
         - choice:
             when:
               - simple: "${header.title} == null"
                 steps:
-                  - to:
-                      uri: "{{app.externalAppUrl}}/congrats/${header.name}?bridgeEndpoint=true"
+                  - toD: "{{app.externalAppUrl}}/congrats/${header.name}?bridgeEndpoint=true"
             otherwise:
               steps:
-                - to:
-                    uri: "{{app.externalAppUrl}}/congrats/${header.name}?bridgeEndpoint=true&title=${header.title}"
+                - toD: "{{app.externalAppUrl}}/congrats/${header.name}?bridgeEndpoint=true&title=${header.title}"
         - log: GET external response ${body}
 - route:
     from:
