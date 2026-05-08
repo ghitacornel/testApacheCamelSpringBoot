@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseDTO {
 
-    private String id;
+    private int id;
     private String name;
 
 }

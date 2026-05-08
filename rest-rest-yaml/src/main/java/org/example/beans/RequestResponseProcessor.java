@@ -11,7 +11,7 @@ public class RequestResponseProcessor implements Processor {
     public void process(Exchange exchange) {
         RequestDTO request = exchange.getIn().getBody(RequestDTO.class);
         ResponseDTO response = ResponseDTO.builder()
-                .id("1")
+                .id(1)
                 .name(request.getName())
                 .build();
         exchange.getMessage().setBody(response);
