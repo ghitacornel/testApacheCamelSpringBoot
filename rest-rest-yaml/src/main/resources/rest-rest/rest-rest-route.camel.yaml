@@ -65,13 +65,11 @@
             name: Exchange.HTTP_METHOD
             constant: POST
         - marshal:
-            json:
-              useDefaultObjectMapper: true
+            json: {}
         - to: "{{app.externalAppUrl}}?bridgeEndpoint=true"
         - log: POST response body ${body}
         - unmarshal:
-            json:
-              useDefaultObjectMapper: true
+            json: {}
 - route:
     from:
       uri: direct:delete
