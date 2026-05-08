@@ -12,7 +12,10 @@
       - path: "/bye"
         produces: "text/html"
         to: "direct:bye"
-      - path: "/congrats/{name}?title={title}"
+      - path: "/congrats/{name}"
+        param:
+          - type: query
+            name: title
         produces: "text/plain"
         to: "direct:congrats"
     post:
