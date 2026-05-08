@@ -31,7 +31,7 @@ public class SimpleRestTest {
     @Test
     public void testGetNoParametersSimpleTextResponse() {
         ResponseEntity<String> response = restClient.get()
-                .uri("/hello")
+                .uri("/simpleText")
                 .retrieve().toEntity(String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -41,7 +41,7 @@ public class SimpleRestTest {
     @Test
     public void testGetNoParametersSimpleHtmlResponse() {
         ResponseEntity<String> response = restClient.get()
-                .uri("/bye")
+                .uri("/simpleHtml")
                 .retrieve().toEntity(String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

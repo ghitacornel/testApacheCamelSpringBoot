@@ -6,10 +6,10 @@
 - rest:
     path: "simple"
     get:
-      - path: "hello"
+      - path: "simpleText"
         produces: "text/plain"
         to: "direct:hello"
-      - path: "bye"
+      - path: "simpleHtml"
         produces: "text/html"
         to: "direct:bye"
       - path: "congrats/{name}"

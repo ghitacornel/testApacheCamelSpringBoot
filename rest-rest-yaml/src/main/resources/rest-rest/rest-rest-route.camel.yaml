@@ -3,10 +3,10 @@
 - rest:
     path: "restrest"
     get:
-      - path: "hello"
+      - path: "simpleText"
         produces: "text/plain"
         to: "direct:hello"
-      - path: "bye"
+      - path: "simpleHtml"
         produces: "text/html"
         to: "direct:bye"
       - path: "congrats/{name}"
@@ -31,13 +31,13 @@
     from:
       uri: direct:hello
       steps:
-        - to: "{{app.externalAppUrl}}/hello?bridgeEndpoint=true"
+        - to: "{{app.externalAppUrl}}/simpleText?bridgeEndpoint=true"
         - log: GET external response ${body}
 - route:
     from:
       uri: direct:bye
       steps:
-        - to: "{{app.externalAppUrl}}/bye?bridgeEndpoint=true"
+        - to: "{{app.externalAppUrl}}/simpleHtml?bridgeEndpoint=true"
         - log: GET external response ${body}
 - route:
     from:

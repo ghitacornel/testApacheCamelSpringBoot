@@ -30,10 +30,10 @@ public abstract class MockServerSetup {
     static void setupExternalApplicationAsMock() {
 
         {
-            stubFor(get("/external/hello").willReturn(ok("Hello World " + LocalDateTime.now())));
+            stubFor(get("/external/simpleText").willReturn(ok("Hello World " + LocalDateTime.now())));
         }
         {
-            stubFor(get("/external/bye").willReturn(ok("<html><body>Bye World</body></html>")));
+            stubFor(get("/external/simpleHtml").willReturn(ok("<html><body>Bye World</body></html>")));
         }
         {
             stubFor(get("/external/congrats/John").willReturn(ok("Congrats John")));
