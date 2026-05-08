@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @CamelSpringBootTest
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class RestRestTest {
+public class SimpleRestTest {
 
     // Spring will inject the random port assigned to the web server
     @LocalServerPort
@@ -68,7 +68,7 @@ public class RestRestTest {
     public void testPost() {
 
         RequestDTO request = RequestDTO.builder().name("John").build();
-        ResponseDTO response = ResponseDTO.builder().id(1).name("John").build();
+        ResponseDTO response = ResponseDTO.builder().id(1).name("John dummyText").build();
 
         ResponseEntity<ResponseDTO> responseEntity = restClient.post()
                 .uri("")
