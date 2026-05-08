@@ -58,7 +58,10 @@ public abstract class MockServerSetup {
                     .withRequestBody(equalToJson(objectMapper.writeValueAsString(request)))
                     .willReturn(okJson(objectMapper.writeValueAsString(response))));
         }
-
+        {
+            stubFor(delete("/external/123")
+                    .willReturn(noContent()));
+        }
         log.info(wireMockServer.getStubMappings().toString());
     }
 

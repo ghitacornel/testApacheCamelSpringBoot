@@ -26,7 +26,7 @@
         outType: org.example.model.ResponseDTO
         to: "direct:post"
     delete:
-      - path: "{id}"
+      - path: "/{id}"
         to: "direct:delete"
 
 # REST routes
@@ -77,5 +77,9 @@
       uri: direct:delete
       steps:
         - log: DELETE request path param ${header.id}
+        - setHeader:
+            name: Exchange.HTTP_METHOD
+            constant: DELETE
+        - toD: "{{app.externalAppUrl}}/${header.id}?bridgeEndpoint=true"
         - setBody:
             simple: ${null}
