@@ -35,15 +35,13 @@
       uri: direct:simpleText
       steps:
         - transform:
-            constant:
-              expression: Hello World
+            constant: Hello World
 - route:
     from:
       uri: direct:simpleHtml
       steps:
         - transform:
-            constant:
-              expression: <html><body>Bye World</body></html>
+            constant: <html><body>Bye World</body></html>
 - route:
     from:
       uri: direct:simpleParameters
