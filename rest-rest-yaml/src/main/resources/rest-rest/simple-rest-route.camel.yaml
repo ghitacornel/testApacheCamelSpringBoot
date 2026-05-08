@@ -48,8 +48,7 @@
     from:
       uri: direct:congrats
       steps:
-        - log:
-            message: GET request query and path param ${header.title} ${header.name}
+        - log: GET request query and path param ${header.title} ${header.name}
         - choice:
             when:
               - simple: "${header.title} == null"
