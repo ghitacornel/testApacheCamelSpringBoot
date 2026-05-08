@@ -65,7 +65,7 @@ public class RestRestTest {
         ResponseDTO response = ResponseDTO.builder().id(1).name("John").build();
 
         ResponseEntity<ResponseDTO> responseEntity = restClient.post()
-                .uri("http://localhost:" + webServerPort + "/camel/person/submit")
+                .uri("http://localhost:" + webServerPort + "/camel/person")
                 .body(request)
                 .retrieve().toEntity(ResponseDTO.class);
 

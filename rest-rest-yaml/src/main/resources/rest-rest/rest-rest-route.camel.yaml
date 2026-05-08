@@ -13,7 +13,7 @@
         produces: "text/plain"
         to: "direct:congrats"
     post:
-      - path: "/submit"
+      - path: ""
         consumes: "application/json"
         produces: "application/json"
         type: org.example.model.RequestDTO
