@@ -25,14 +25,14 @@ public class RestRestTest {
 
     @BeforeEach
     void beforeAll() {
-        restClient = RestClient.create("http://localhost:" + webServerPort + "/camel");
+        restClient = RestClient.create("http://localhost:" + webServerPort + "/camel/simple");
     }
 
     @Test
     public void testGet() {
         {
             ResponseEntity<String> response = restClient.get()
-                    .uri("/person/hello")
+                    .uri("/hello")
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -40,7 +40,7 @@ public class RestRestTest {
         }
         {
             ResponseEntity<String> response = restClient.get()
-                    .uri("/person/bye")
+                    .uri("/bye")
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -48,7 +48,7 @@ public class RestRestTest {
         }
         {
             ResponseEntity<String> response = restClient.get()
-                    .uri("/person/congrats/{name}", "John")
+                    .uri("/congrats/{name}", "John")
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -56,7 +56,7 @@ public class RestRestTest {
         }
         {
             ResponseEntity<String> response = restClient.get()
-                    .uri("/person/congrats/{name}?title={title}", "John", "Sir")
+                    .uri("/congrats/{name}?title={title}", "John", "Sir")
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -71,7 +71,7 @@ public class RestRestTest {
         ResponseDTO response = ResponseDTO.builder().id(1).name("John").build();
 
         ResponseEntity<ResponseDTO> responseEntity = restClient.post()
-                .uri("/person")
+                .uri("")
                 .body(request)
                 .retrieve().toEntity(ResponseDTO.class);
 
@@ -83,7 +83,7 @@ public class RestRestTest {
     public void testDelete() {
 
         ResponseEntity<Void> response = restClient.delete()
-                .uri("/person/{id}", "123")
+                .uri("/{id}", "123")
                 .retrieve().toBodilessEntity();
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
