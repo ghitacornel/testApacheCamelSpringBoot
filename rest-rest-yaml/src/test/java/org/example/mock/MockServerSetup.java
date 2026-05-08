@@ -3,6 +3,7 @@ package org.example.mock;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.example.model.RequestDTO;
 import org.example.model.ResponseDTO;
 import org.junit.jupiter.api.AfterAll;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 
+@Slf4j
 //@WireMockTest
 // doesn't work, need to investigate, till then just manual setup
 public abstract class MockServerSetup {
@@ -56,6 +58,8 @@ public abstract class MockServerSetup {
                     .withRequestBody(equalToJson(objectMapper.writeValueAsString(request)))
                     .willReturn(okJson(objectMapper.writeValueAsString(response))));
         }
+
+        log.info(wireMockServer.getStubMappings().toString());
     }
 
 }
