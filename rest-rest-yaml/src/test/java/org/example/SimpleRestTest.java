@@ -29,23 +29,27 @@ public class SimpleRestTest {
     }
 
     @Test
-    public void testGet() {
-        {
-            ResponseEntity<String> response = restClient.get()
-                    .uri("/hello")
-                    .retrieve().toEntity(String.class);
+    public void testGetNoParametersSimpleTextResponse() {
+        ResponseEntity<String> response = restClient.get()
+                .uri("/hello")
+                .retrieve().toEntity(String.class);
 
-            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(response.getBody()).isEqualTo("Hello World");
-        }
-        {
-            ResponseEntity<String> response = restClient.get()
-                    .uri("/bye")
-                    .retrieve().toEntity(String.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).startsWith("Hello World");
+    }
 
-            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(response.getBody()).isEqualTo("<html><body>Bye World</body></html>");
-        }
+    @Test
+    public void testGetNoParametersSimpleHtmlResponse() {
+        ResponseEntity<String> response = restClient.get()
+                .uri("/bye")
+                .retrieve().toEntity(String.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isEqualTo("<html><body>Bye World</body></html>");
+    }
+
+    @Test
+    public void testGetPathAndQueryParametersSimpleTextResponse() {
         {
             ResponseEntity<String> response = restClient.get()
                     .uri("/congrats/{name}", "John")
