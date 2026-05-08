@@ -79,5 +79,3 @@
             name: Exchange.HTTP_METHOD
             constant: DELETE
         - toD: "{{app.externalAppUrl}}/${header.id}?bridgeEndpoint=true"
-        - setBody:
-            simple: ${null}
