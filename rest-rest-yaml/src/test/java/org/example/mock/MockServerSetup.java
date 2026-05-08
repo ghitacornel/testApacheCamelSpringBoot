@@ -36,8 +36,8 @@ public abstract class MockServerSetup {
             stubFor(get("/external/simpleHtml").willReturn(ok("<html><body>Bye World</body></html>")));
         }
         {
-            stubFor(get("/external/congrats/John").willReturn(ok("Congrats John")));
-            stubFor(get("/external/congrats/John?title=Sir").willReturn(ok("Congrats Sir John")));
+            stubFor(get("/external/simpleParameters/John").willReturn(ok("Congrats John")));
+            stubFor(get("/external/simpleParameters/John?title=Sir").willReturn(ok("Congrats Sir John")));
         }
     }
 

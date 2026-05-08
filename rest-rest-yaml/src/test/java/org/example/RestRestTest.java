@@ -54,7 +54,7 @@ public class RestRestTest extends MockServerSetup {
 
         {
             ResponseEntity<String> response = restClient.get()
-                    .uri("/congrats/{name}", "John")
+                    .uri("/simpleParameters/{name}", "John")
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -62,7 +62,7 @@ public class RestRestTest extends MockServerSetup {
         }
         {
             ResponseEntity<String> response = restClient.get()
-                    .uri("/congrats/{name}?title={title}", "John", "Sir")
+                    .uri("/simpleParameters/{name}?title={title}", "John", "Sir")
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

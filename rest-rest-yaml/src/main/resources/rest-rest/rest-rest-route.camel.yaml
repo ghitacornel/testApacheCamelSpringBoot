@@ -9,7 +9,7 @@
       - path: "simpleHtml"
         produces: "text/html"
         to: "direct:bye"
-      - path: "congrats/{name}"
+      - path: "simpleParameters/{name}"
         param:
           - type: query
             name: title
@@ -44,15 +44,14 @@
       uri: direct:congrats
       steps:
         - log: GET external request query and path param ${header.title} ${header.name}
-#        - removeHeaders: "CamelHttp*"
         - choice:
             when:
               - simple: "${header.title} == null"
                 steps:
-                  - toD: "{{app.externalAppUrl}}/congrats/${header.name}?bridgeEndpoint=true"
+                  - toD: "{{app.externalAppUrl}}/simpleParameters/${header.name}?bridgeEndpoint=true"
             otherwise:
               steps:
-                - toD: "{{app.externalAppUrl}}/congrats/${header.name}?bridgeEndpoint=true&title=${header.title}"
+                - toD: "{{app.externalAppUrl}}/simpleParameters/${header.name}?bridgeEndpoint=true&title=${header.title}"
         - log: GET external response ${body}
 - route:
     from:

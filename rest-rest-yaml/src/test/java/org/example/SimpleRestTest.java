@@ -52,7 +52,7 @@ public class SimpleRestTest {
     public void testGetPathAndQueryParametersSimpleTextResponse() {
         {
             ResponseEntity<String> response = restClient.get()
-                    .uri("/congrats/{name}", "John")
+                    .uri("/simpleParameters/{name}", "John")
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -60,7 +60,7 @@ public class SimpleRestTest {
         }
         {
             ResponseEntity<String> response = restClient.get()
-                    .uri("/congrats/{name}?title={title}", "John", "Sir")
+                    .uri("/simpleParameters/{name}?title={title}", "John", "Sir")
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

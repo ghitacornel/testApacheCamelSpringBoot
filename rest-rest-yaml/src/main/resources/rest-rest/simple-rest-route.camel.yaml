@@ -12,7 +12,7 @@
       - path: "simpleHtml"
         produces: "text/html"
         to: "direct:bye"
-      - path: "congrats/{name}"
+      - path: "simpleParameters/{name}"
         param:
           - type: query
             name: title
