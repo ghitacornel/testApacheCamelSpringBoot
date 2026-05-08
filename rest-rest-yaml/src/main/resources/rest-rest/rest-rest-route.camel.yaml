@@ -48,14 +48,14 @@
             when:
               - simple: "${header.title} == null"
                 steps:
-                - transform:
-                    expression:
-                      simple: Congrats ${header.name}
+                  - transform:
+                      expression:
+                        simple: Congrats ${header.name}
             otherwise:
               steps:
-              - transform:
-                  expression:
-                    simple: Congrats ${header.title} ${header.name}
+                - transform:
+                    expression:
+                      simple: Congrats ${header.title} ${header.name}
 - route:
     from:
       uri: direct:post
@@ -72,3 +72,5 @@
       steps:
         - log:
             message: DELETE request body ${header.id}
+        - setBody:
+            constant: null
