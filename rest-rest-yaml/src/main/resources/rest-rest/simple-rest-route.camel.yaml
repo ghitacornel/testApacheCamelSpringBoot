@@ -8,16 +8,16 @@
     get:
       - path: "simpleText"
         produces: "text/plain"
-        to: "direct:hello"
+        to: "direct:simpleText"
       - path: "simpleHtml"
         produces: "text/html"
-        to: "direct:bye"
+        to: "direct:simpleHtml"
       - path: "simpleParameters/{name}"
         param:
           - type: query
             name: title
         produces: "text/plain"
-        to: "direct:congrats"
+        to: "direct:simpleParameters"
     post:
       - path: ""
         consumes: "application/json"
@@ -32,21 +32,21 @@
 # REST routes
 - route:
     from:
-      uri: direct:hello
+      uri: direct:simpleText
       steps:
         - transform:
             constant:
               expression: Hello World
 - route:
     from:
-      uri: direct:bye
+      uri: direct:simpleHtml
       steps:
         - transform:
             constant:
               expression: <html><body>Bye World</body></html>
 - route:
     from:
-      uri: direct:congrats
+      uri: direct:simpleParameters
       steps:
         - log: GET request query and path param ${header.title} ${header.name}
         - choice:

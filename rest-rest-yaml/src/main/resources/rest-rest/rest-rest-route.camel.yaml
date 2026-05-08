@@ -5,16 +5,16 @@
     get:
       - path: "simpleText"
         produces: "text/plain"
-        to: "direct:hello"
+        to: "direct:simpleText"
       - path: "simpleHtml"
         produces: "text/html"
-        to: "direct:bye"
+        to: "direct:simpleHtml"
       - path: "simpleParameters/{name}"
         param:
           - type: query
             name: title
         produces: "text/plain"
-        to: "direct:congrats"
+        to: "direct:simpleParameters"
     post:
       - path: ""
         consumes: "application/json"
@@ -29,19 +29,19 @@
 # REST routes
 - route:
     from:
-      uri: direct:hello
+      uri: direct:simpleText
       steps:
         - to: "{{app.externalAppUrl}}/simpleText?bridgeEndpoint=true"
         - log: GET external response ${body}
 - route:
     from:
-      uri: direct:bye
+      uri: direct:simpleHtml
       steps:
         - to: "{{app.externalAppUrl}}/simpleHtml?bridgeEndpoint=true"
         - log: GET external response ${body}
 - route:
     from:
-      uri: direct:congrats
+      uri: direct:simpleParameters
       steps:
         - log: GET external request query and path param ${header.title} ${header.name}
         - choice:
