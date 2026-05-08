@@ -32,6 +32,13 @@ public abstract class MockServerSetup {
         {
             stubFor(get("/external/hello").willReturn(ok("Hello World " + LocalDateTime.now())));
         }
+        {
+            stubFor(get("/external/bye").willReturn(ok("<html><body>Bye World</body></html>")));
+        }
+        {
+            stubFor(get("/external/congrats/John").willReturn(ok("Congrats John")));
+            stubFor(get("/external/congrats/John?title=Sir").willReturn(ok("Congrats Sir John")));
+        }
     }
 
 }

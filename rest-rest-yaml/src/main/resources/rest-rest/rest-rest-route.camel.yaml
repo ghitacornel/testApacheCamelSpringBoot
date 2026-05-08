@@ -39,10 +39,10 @@
     from:
       uri: direct:bye
       steps:
-        - transform:
-            expression:
-              constant:
-                expression: <html><body>Bye World</body></html>
+        - to:
+            uri: "http://localhost:8080/external/bye?bridgeEndpoint=true"
+        - log:
+            message: GET external response ${body}
 - route:
     from:
       uri: direct:congrats
