@@ -67,7 +67,7 @@
         - marshal:
             json:
               useDefaultObjectMapper: true
-        - to: "{{app.externalAppUrl}}/post?bridgeEndpoint=true"
+        - to: "{{app.externalAppUrl}}?bridgeEndpoint=true"
         - log: POST response body ${body}
         - unmarshal:
             json:

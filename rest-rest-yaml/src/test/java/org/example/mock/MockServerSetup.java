@@ -54,7 +54,7 @@ public abstract class MockServerSetup {
             RequestDTO request = RequestDTO.builder().name("John").build();
             ResponseDTO response = ResponseDTO.builder().id(1).name("John dummyText").build();
 
-            stubFor(post("/external/post")
+            stubFor(post("/external")
                     .withRequestBody(equalToJson(objectMapper.writeValueAsString(request)))
                     .willReturn(okJson(objectMapper.writeValueAsString(response))));
         }
