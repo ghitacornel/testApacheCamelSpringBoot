@@ -56,14 +56,14 @@
             when:
               - simple: "${header.title} == null"
                 steps:
-                  - transform:
-                      expression:
-                        simple: Congrats ${header.name}
+                  - to:
+                      uri: "http://localhost:8080/external/congrats/${in.header.name}?bridgeEndpoint=true"
             otherwise:
               steps:
-                - transform:
-                    expression:
-                      simple: Congrats ${header.title} ${header.name}
+                - to:
+                    uri: "http://localhost:8080/external/congrats/${header.name}?bridgeEndpoint=true&title=${header.title}"
+        - log:
+            message: GET external response ${body}
 - route:
     from:
       uri: direct:post

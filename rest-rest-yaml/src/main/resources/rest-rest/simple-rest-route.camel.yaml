@@ -35,17 +35,15 @@
       uri: direct:hello
       steps:
         - transform:
-            expression:
-              constant:
-                expression: Hello World
+            constant:
+              expression: Hello World
 - route:
     from:
       uri: direct:bye
       steps:
         - transform:
-            expression:
-              constant:
-                expression: <html><body>Bye World</body></html>
+            constant:
+              expression: <html><body>Bye World</body></html>
 - route:
     from:
       uri: direct:congrats
@@ -57,13 +55,11 @@
               - simple: "${header.title} == null"
                 steps:
                   - transform:
-                      expression:
-                        simple: Congrats ${header.name}
+                      simple: Congrats ${header.name}
             otherwise:
               steps:
                 - transform:
-                    expression:
-                      simple: Congrats ${header.title} ${header.name}
+                    simple: Congrats ${header.title} ${header.name}
 - route:
     from:
       uri: direct:post
