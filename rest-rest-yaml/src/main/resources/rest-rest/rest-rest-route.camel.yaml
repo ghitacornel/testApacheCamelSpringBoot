@@ -4,15 +4,15 @@
 # REST must be kept only as a facade
 # each REST endpoint must delegate work to another route
 - rest:
-    path: "/restrest"
+    path: "restrest"
     get:
-      - path: "/hello"
+      - path: "hello"
         produces: "text/plain"
         to: "direct:hello"
-      - path: "/bye"
+      - path: "bye"
         produces: "text/html"
         to: "direct:bye"
-      - path: "/congrats/{name}"
+      - path: "congrats/{name}"
         param:
           - type: query
             name: title
