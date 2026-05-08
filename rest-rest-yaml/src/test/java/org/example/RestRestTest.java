@@ -48,7 +48,7 @@ public class RestRestTest {
         }
         {
             ResponseEntity<String> response = restClient.get()
-                    .uri("/person/congrats/John")
+                    .uri("/person/congrats/{name}", "John")
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -56,7 +56,7 @@ public class RestRestTest {
         }
         {
             ResponseEntity<String> response = restClient.get()
-                    .uri("/person/congrats/John?title=Sir")
+                    .uri("/person/congrats/{name}?title={title}", "John", "Sir")
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -77,23 +77,17 @@ public class RestRestTest {
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isEqualTo(response);
-
     }
 
     @Test
     public void testDelete() {
 
         ResponseEntity<Void> response = restClient.delete()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/person/id")
-                        .queryParam("id", 123)
-                        .build()
-                )
+                .uri("/person/{id}", "123")
                 .retrieve().toBodilessEntity();
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
         assertThat(response.getBody()).isNull();
-
     }
 
 }
