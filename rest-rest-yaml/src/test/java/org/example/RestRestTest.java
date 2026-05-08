@@ -77,7 +77,7 @@ public class RestRestTest extends MockServerSetup {
         ResponseDTO response = ResponseDTO.builder().id(1).name("John dummyText").build();
 
         ResponseEntity<ResponseDTO> responseEntity = restClient.post()
-                .uri("/post")
+                .uri("/")
                 .body(request)
                 .retrieve().toEntity(ResponseDTO.class);
 

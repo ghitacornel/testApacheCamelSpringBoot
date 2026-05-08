@@ -19,7 +19,7 @@
         produces: "text/plain"
         to: "direct:simpleParameters"
     post:
-      - path: "post"
+      - path: "/"
         consumes: "application/json"
         produces: "application/json"
         type: org.example.model.RequestDTO
