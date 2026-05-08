@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 //@WireMockTest
+// doesn't work, need to investigate, till then just manual setup
 public abstract class MockServerSetup {
 
     static final WireMockServer wireMockServer = new WireMockServer(8080, 8181);
