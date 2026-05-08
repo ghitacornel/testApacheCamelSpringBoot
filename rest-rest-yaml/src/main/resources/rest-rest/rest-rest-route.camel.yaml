@@ -43,7 +43,7 @@
       uri: direct:congrats
       steps:
         - log:
-            message: GET request path and query param ${header.title} ${header.name}
+            message: GET request query and path param ${header.title} ${header.name}
         - choice:
             when:
               - simple: "${header.title} == null"
@@ -71,6 +71,6 @@
       uri: direct:delete
       steps:
         - log:
-            message: DELETE request body ${header.id}
+            message: DELETE request path param ${header.id}
         - setBody:
             simple: ${null}
