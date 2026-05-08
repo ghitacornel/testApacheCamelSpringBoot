@@ -84,10 +84,14 @@ public class RestRestTest {
     public void testDelete() {
 
         ResponseEntity<Void> response = restClient.delete()
-                .uri("/person/123")
+                .uri(uriBuilder -> uriBuilder
+                        .path("/person/id")
+                        .queryParam("id", 123)
+                        .build()
+                )
                 .retrieve().toBodilessEntity();
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
         assertThat(response.getBody()).isNull();
 
     }
