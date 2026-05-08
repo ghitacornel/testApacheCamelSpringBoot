@@ -64,17 +64,14 @@
     from:
       uri: direct:post
       steps:
-        - log:
-            message: POST request body ${body}
+        - log: POST request body ${body}
         - bean:
             beanType: org.example.beans.RequestResponseProcessor
-        - log:
-            message: POST response body ${body}
+        - log: POST response body ${body}
 - route:
     from:
       uri: direct:delete
       steps:
-        - log:
-            message: DELETE request path param ${header.id}
+        - log: DELETE request path param ${header.id}
         - setBody:
             simple: ${null}

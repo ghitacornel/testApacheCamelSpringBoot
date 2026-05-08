@@ -31,18 +31,14 @@
     from:
       uri: direct:hello
       steps:
-        - to:
-            uri: "{{app.externalAppUrl}}/hello?bridgeEndpoint=true"
-        - log:
-            message: GET external response ${body}
+        - to: "{{app.externalAppUrl}}/hello?bridgeEndpoint=true"
+        - log: GET external response ${body}
 - route:
     from:
       uri: direct:bye
       steps:
-        - to:
-            uri: "{{app.externalAppUrl}}/bye?bridgeEndpoint=true"
-        - log:
-            message: GET external response ${body}
+        - to: "{{app.externalAppUrl}}/bye?bridgeEndpoint=true"
+        - log: GET external response ${body}
 - route:
     from:
       uri: direct:congrats
@@ -54,28 +50,24 @@
               - simple: "${header.title} == null"
                 steps:
                   - to:
-                      uri: "http://localhost:8080/external/congrats/${in.header.name}?bridgeEndpoint=true"
+                      uri: "{{app.externalAppUrl}}/congrats/${header.name}?bridgeEndpoint=true"
             otherwise:
               steps:
                 - to:
-                    uri: "http://localhost:8080/external/congrats/${header.name}?bridgeEndpoint=true&title=${header.title}"
-        - log:
-            message: GET external response ${body}
+                    uri: "{{app.externalAppUrl}}/congrats/${header.name}?bridgeEndpoint=true&title=${header.title}"
+        - log: GET external response ${body}
 - route:
     from:
       uri: direct:post
       steps:
-        - log:
-            message: POST request body ${body}
+        - log: POST request body ${body}
         - bean:
             beanType: org.example.beans.RequestResponseProcessor
-        - log:
-            message: POST response body ${body}
+        - log: POST response body ${body}
 - route:
     from:
       uri: direct:delete
       steps:
-        - log:
-            message: DELETE request path param ${header.id}
+        - log: DELETE request path param ${header.id}
         - setBody:
             simple: ${null}
