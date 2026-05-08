@@ -1,7 +1,7 @@
 - restConfiguration:
     bindingMode: json
 - rest:
-    path: "/say"
+    path: "/person"
     get:
       - path: "/hello"
         produces: "text/plain"

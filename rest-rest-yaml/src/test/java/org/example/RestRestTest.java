@@ -26,7 +26,7 @@ public class RestRestTest {
     public void testGet() {
         {
             ResponseEntity<String> response = restClient.get()
-                    .uri("http://localhost:" + webServerPort + "/camel/say/hello")
+                    .uri("http://localhost:" + webServerPort + "/camel/person/hello")
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -34,7 +34,7 @@ public class RestRestTest {
         }
         {
             ResponseEntity<String> response = restClient.get()
-                    .uri("http://localhost:" + webServerPort + "/camel/say/bye")
+                    .uri("http://localhost:" + webServerPort + "/camel/person/bye")
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -42,7 +42,7 @@ public class RestRestTest {
         }
         {
             ResponseEntity<String> response = restClient.get()
-                    .uri("http://localhost:" + webServerPort + "/camel/say/congrats/John")
+                    .uri("http://localhost:" + webServerPort + "/camel/person/congrats/John")
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -50,7 +50,7 @@ public class RestRestTest {
         }
         {
             ResponseEntity<String> response = restClient.get()
-                    .uri("http://localhost:" + webServerPort + "/camel/say/congrats/John?title=Sir")
+                    .uri("http://localhost:" + webServerPort + "/camel/person/congrats/John?title=Sir")
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -65,7 +65,7 @@ public class RestRestTest {
         ResponseDTO response = ResponseDTO.builder().id(1).name("John").build();
 
         ResponseEntity<ResponseDTO> responseEntity = restClient.post()
-                .uri("http://localhost:" + webServerPort + "/camel/say/submit")
+                .uri("http://localhost:" + webServerPort + "/camel/person/submit")
                 .body(request)
                 .retrieve().toEntity(ResponseDTO.class);
 
