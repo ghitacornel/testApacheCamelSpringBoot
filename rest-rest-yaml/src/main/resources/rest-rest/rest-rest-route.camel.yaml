@@ -64,6 +64,9 @@
         - setHeader:
             name: Exchange.HTTP_METHOD
             constant: POST
+        - marshal:
+            json:
+              useDefaultObjectMapper: true
         - to: "{{app.externalAppUrl}}/?bridgeEndpoint=true"
         - log: POST response body ${body}
 - route:
