@@ -1,10 +1,15 @@
 package org.example.mock;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.client.WireMock;
 import lombok.SneakyThrows;
+import org.example.model.RequestDTO;
+import org.example.model.ResponseDTO;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
@@ -14,6 +19,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 public abstract class MockServerSetup {
 
     static final WireMockServer wireMockServer = new WireMockServer(8080, 8181);
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeAll
     static void startWireMockServer() {
@@ -38,6 +44,14 @@ public abstract class MockServerSetup {
         {
             stubFor(get("/external/simpleParameters/John").willReturn(ok("Congrats John")));
             stubFor(get("/external/simpleParameters/John?title=Sir").willReturn(ok("Congrats Sir John")));
+        }
+        {
+            RequestDTO request = RequestDTO.builder().name("John").build();
+            ResponseDTO response = ResponseDTO.builder().id(1).name("John dummyText").build();
+
+            stubFor(WireMock.post("/externalService")
+                    .withRequestBody(equalToJson(objectMapper.writeValueAsString(request)))
+                    .willReturn(okJson(objectMapper.writeValueAsString(response))));
         }
     }
 
