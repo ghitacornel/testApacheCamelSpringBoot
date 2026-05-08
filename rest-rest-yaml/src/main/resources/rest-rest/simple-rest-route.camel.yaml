@@ -1,3 +1,6 @@
+- restConfiguration:
+    bindingMode: json
+
 # REST must be kept only as a facade
 # each REST endpoint must delegate work to another route
 - rest:
