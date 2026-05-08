@@ -3,6 +3,7 @@ package org.example;
 import org.apache.camel.test.spring.junit5.CamelSpringBootTest;
 import org.example.model.RequestDTO;
 import org.example.model.ResponseDTO;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -20,13 +21,18 @@ public class RestRestTest {
     @LocalServerPort
     int webServerPort;
 
-    RestClient restClient = RestClient.create();
+    RestClient restClient;
+
+    @BeforeEach
+    void beforeAll() {
+        restClient = RestClient.create("http://localhost:" + webServerPort + "/camel");
+    }
 
     @Test
     public void testGet() {
         {
             ResponseEntity<String> response = restClient.get()
-                    .uri("http://localhost:" + webServerPort + "/camel/person/hello")
+                    .uri("/person/hello")
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -34,7 +40,7 @@ public class RestRestTest {
         }
         {
             ResponseEntity<String> response = restClient.get()
-                    .uri("http://localhost:" + webServerPort + "/camel/person/bye")
+                    .uri("/person/bye")
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -42,7 +48,7 @@ public class RestRestTest {
         }
         {
             ResponseEntity<String> response = restClient.get()
-                    .uri("http://localhost:" + webServerPort + "/camel/person/congrats/John")
+                    .uri("/person/congrats/John")
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -50,7 +56,7 @@ public class RestRestTest {
         }
         {
             ResponseEntity<String> response = restClient.get()
-                    .uri("http://localhost:" + webServerPort + "/camel/person/congrats/John?title=Sir")
+                    .uri("/person/congrats/John?title=Sir")
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -65,12 +71,24 @@ public class RestRestTest {
         ResponseDTO response = ResponseDTO.builder().id(1).name("John").build();
 
         ResponseEntity<ResponseDTO> responseEntity = restClient.post()
-                .uri("http://localhost:" + webServerPort + "/camel/person")
+                .uri("/person")
                 .body(request)
                 .retrieve().toEntity(ResponseDTO.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isEqualTo(response);
+
+    }
+
+    @Test
+    public void testDelete() {
+
+        ResponseEntity<Void> response = restClient.delete()
+                .uri("/person/123")
+                .retrieve().toBodilessEntity();
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNull();
 
     }
 

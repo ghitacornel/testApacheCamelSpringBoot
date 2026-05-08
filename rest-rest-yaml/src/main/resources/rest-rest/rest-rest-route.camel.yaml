@@ -19,6 +19,9 @@
         type: org.example.model.RequestDTO
         outType: org.example.model.ResponseDTO
         to: "direct:post"
+    delete:
+      - path: "{id}"
+        to: "direct:delete"
 - route:
     from:
       uri: direct:hello
@@ -63,3 +66,9 @@
             beanType: org.example.beans.RequestResponseProcessor
         - log:
             message: POST response body ${body}
+- route:
+    from:
+      uri: direct:delete
+      steps:
+        - log:
+            message: DELETE request body ${header.id}
