@@ -31,10 +31,10 @@
     from:
       uri: direct:hello
       steps:
-        - transform:
-            expression:
-              constant:
-                expression: Hello World
+        - to:
+            uri: "http://localhost:8080/external/hello?bridgeEndpoint=true"
+        - log:
+            message: GET external response ${body}
 - route:
     from:
       uri: direct:bye

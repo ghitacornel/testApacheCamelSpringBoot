@@ -1,6 +1,7 @@
 package org.example;
 
 import org.apache.camel.test.spring.junit5.CamelSpringBootTest;
+import org.example.mock.MockServerSetup;
 import org.example.model.RequestDTO;
 import org.example.model.ResponseDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @CamelSpringBootTest
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class RestRestTest {
+public class RestRestTest extends MockServerSetup {
 
     // Spring will inject the random port assigned to the web server
     @LocalServerPort
@@ -36,7 +37,7 @@ public class RestRestTest {
                     .retrieve().toEntity(String.class);
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(response.getBody()).isEqualTo("Hello World");
+            assertThat(response.getBody()).startsWith("Hello World");
         }
         {
             ResponseEntity<String> response = restClient.get()
