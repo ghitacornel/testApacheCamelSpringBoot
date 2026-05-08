@@ -32,7 +32,7 @@
       uri: direct:hello
       steps:
         - to:
-            uri: "http://localhost:8080/external/hello?bridgeEndpoint=true"
+            uri: "{{app.externalAppUrl}}/hello?bridgeEndpoint=true"
         - log:
             message: GET external response ${body}
 - route:
@@ -40,7 +40,7 @@
       uri: direct:bye
       steps:
         - to:
-            uri: "http://localhost:8080/external/bye?bridgeEndpoint=true"
+            uri: "{{app.externalAppUrl}}/bye?bridgeEndpoint=true"
         - log:
             message: GET external response ${body}
 - route:

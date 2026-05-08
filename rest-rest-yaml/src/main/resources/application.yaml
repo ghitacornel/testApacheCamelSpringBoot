@@ -13,3 +13,4 @@ camel:
 
 app:
   specificProcessorConfig: dummyText
+  externalAppUrl: http://localhost:8080/external
