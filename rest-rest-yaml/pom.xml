@@ -54,6 +54,12 @@
             <artifactId>camel-yaml-dsl-starter</artifactId>
         </dependency>
 
+        <!-- swagger -->
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-springdoc-starter</artifactId>
+        </dependency>
+
         <!-- tests -->
         <dependency>
             <groupId>org.wiremock</groupId>
